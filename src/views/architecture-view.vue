@@ -74,6 +74,7 @@
 
 <script setup>
 import { useHead } from '@vueuse/head'
+import hljs from 'highlight.js'
 
 useHead({
   title: 'Architecture — Uranite',
@@ -171,20 +172,21 @@ const buildCode = `sudo apt install -y g++ cmake llvm-19-dev libfmt-dev libspdlo
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 make -C build -j$(nproc)`
 
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+function escapeAttr(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
 
 const buildSnippet = (() => {
-  const escaped = escapeHtml(buildCode)
-  return `<div class="code-header"><span class="code-lang">bash</span><button class="code-copy" data-code="${escaped}">Copy</button></div><pre class="hljs"><code>${escaped}</code></pre>`
+  const highlighted = hljs.highlight(buildCode, { language: 'bash' }).value
+  return `<div class="code-header"><span class="code-lang">bash</span><button class="code-copy" data-code="${escapeAttr(buildCode)}">Copy</button></div><pre class="hljs"><code>${highlighted}</code></pre>`
 })()
 
 function handleCopy(event) {
   const btn = event.target.closest('.code-copy')
   if (!btn) return
   event.preventDefault()
-  navigator.clipboard.writeText(btn.getAttribute('data-code')).then(() => {
+  const code = btn.getAttribute('data-code')
+  navigator.clipboard.writeText(code).then(() => {
     btn.textContent = 'Copied!'
     setTimeout(() => { btn.textContent = 'Copy' }, 2000)
   })
