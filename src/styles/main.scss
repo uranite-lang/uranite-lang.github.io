@@ -170,6 +170,9 @@
 
   .markdown-body pre {
     @apply p-4 rounded-lg overflow-x-auto mb-6;
+    white-space: pre;
+    tab-size: 4;
+    -moz-tab-size: 4;
   }
 
   .markdown-body .code-block pre {
