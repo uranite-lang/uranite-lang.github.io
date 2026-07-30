@@ -118,20 +118,21 @@ public function main() -> I32:
     puts( "Hello, Uranite!" )
     return 0`
 
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+function escapeAttr(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
 
 const codeExample = (() => {
-  const escaped = escapeHtml(codeSource)
-  return `<div class="code-header"><span class="code-lang">uranite</span><button class="code-copy" data-code="${escaped}">Copy</button></div><pre class="hljs"><code>${escaped}</code></pre>`
+  const highlighted = hljs.highlight(codeSource, { language: 'python' }).value
+  return `<div class="code-header"><span class="code-lang">uranite</span><button class="code-copy" data-code="${escapeAttr(codeSource)}">Copy</button></div><pre class="hljs"><code>${highlighted}</code></pre>`
 })()
 
 function handleCopy(event) {
   const btn = event.target.closest('.code-copy')
   if (!btn) return
   event.preventDefault()
-  navigator.clipboard.writeText(btn.getAttribute('data-code')).then(() => {
+  const code = btn.getAttribute('data-code')
+  navigator.clipboard.writeText(code).then(() => {
     btn.textContent = 'Copied!'
     setTimeout(() => { btn.textContent = 'Copy' }, 2000)
   })
