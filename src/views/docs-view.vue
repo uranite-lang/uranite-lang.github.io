@@ -138,7 +138,10 @@ async function loadTree() {
 async function loadRootReadme() {
   loadingContent.value = true
   try {
-    let res = await fetch(`${CONFIG.rawGithub}/${CONFIG.mainRepo}/${version.value}/index.md`)
+    let res = await fetch(`${CONFIG.rawGithub}/${CONFIG.mainRepo}/${version.value}/docs/index.md`)
+    if (!res.ok) {
+      res = await fetch(`${CONFIG.rawGithub}/${CONFIG.mainRepo}/${version.value}/docs/README.md`)
+    }
     if (!res.ok) {
       res = await fetch(`${CONFIG.rawGithub}/${CONFIG.mainRepo}/${version.value}/README.md`)
     }
