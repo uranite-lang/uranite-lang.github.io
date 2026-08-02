@@ -180,7 +180,7 @@
   }
 
   .markdown-body pre code {
-    @apply p-0 bg-transparent text-inherit;
+    @apply p-0 bg-transparent dark:bg-transparent text-inherit rounded-none;
   }
 
   .markdown-body a {
