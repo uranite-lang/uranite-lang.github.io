@@ -5,7 +5,7 @@
 <script setup>
 import { computed, watch, nextTick } from 'vue'
 import MarkdownIt from 'markdown-it'
-import hljs from 'highlight.js'
+import hljs from '../scripts/hljs.js'
 
 const props = defineProps({
   source: { type: String, default: '' }
