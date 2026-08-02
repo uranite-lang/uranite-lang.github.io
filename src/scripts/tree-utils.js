@@ -3,7 +3,7 @@ export function buildTree(flatItems, prefix) {
   const map = { '': root }
 
   const filtered = flatItems.filter(item =>
-    item.path.startsWith(prefix + '/') && item.type === 'blob'
+    item.path.startsWith(prefix + '/') && item.type === 'blob' && item.path.endsWith('.md')
   )
 
   filtered.forEach(item => {
