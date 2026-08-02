@@ -16,16 +16,6 @@
     </section>
 
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Source Tree</h2>
-      <div class="space-y-3">
-        <div v-for="mod in modules" :key="mod.path" class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-          <code class="text-sm font-mono font-semibold text-primary-600 dark:text-primary-400">{{ mod.path }}</code>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ mod.description }}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mb-16">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Intermediate Representations</h2>
       <div class="space-y-6">
         <div v-for="ir in irStages" :key="ir.name" class="p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
@@ -117,29 +107,6 @@ const pipeline = `Source (.urn)
     │
     ▼
   Linker ─────── Links runtime libraries, produces native executable`
-
-const modules = [
-  { path: 'src/uranite/lexer', description: 'Tokenizer with INDENT/DEDENT emission for indentation-based block structure.' },
-  { path: 'src/uranite/token', description: 'Token type definitions and token stream utilities.' },
-  { path: 'src/uranite/parser', description: 'Recursive descent parser, produces AST.' },
-  { path: 'src/uranite/ast', description: 'Abstract syntax tree node definitions.' },
-  { path: 'src/uranite/semantic', description: 'Two-pass semantic analysis: declaration registration and type checking.' },
-  { path: 'src/uranite/descriptor', description: 'Type descriptors and shared descriptor registry for OOP wrapper classes.' },
-  { path: 'src/uranite/ir/hir', description: 'High-Level IR — 60 node types, preserves loops, match, classes with resolved types.' },
-  { path: 'src/uranite/ir/mir', description: 'Mid-Level IR — control-flow graph of basic blocks with linear instruction sequences.' },
-  { path: 'src/uranite/optimizer', description: 'Dead store elimination, copy propagation, constant folding, block merging, unreachable block elimination.' },
-  { path: 'src/uranite/codegen', description: 'LLVM IR generation from MIR. Handles generics, virtual dispatch, async/await, inline assembly.' },
-  { path: 'src/uranite/compiler', description: 'Pipeline driver orchestrating all stages from source to executable.' },
-  { path: 'src/uranite/backend', description: 'LLVM backend interface and target machine configuration.' },
-  { path: 'src/uranite/diagnostic', description: 'Error and warning reporting with source location tracking.' },
-  { path: 'src/uranite/lookup', description: 'Name resolution and fully qualified name (qualname) lookup.' },
-  { path: 'src/uranite/visitors', description: 'AST visitor pattern implementations for tree traversal.' },
-  { path: 'src/uranite/common', description: 'Shared utilities and common data structures.' },
-  { path: 'src/uranite-crt', description: 'C11 runtime libraries: exceptions, threading, subprocess, IPC, FFI.' },
-  { path: 'src/uranite-fmt', description: 'Code formatter: comment preservation, style linting, auto-formatting.' },
-  { path: 'src/uranite-doc', description: 'Documentation generator: doccomment extraction, model building, rendering.' },
-  { path: 'src/uranite-pkg', description: 'Package manager: manifest parsing, dependency resolution, caching, building.' }
-]
 
 const irStages = [
   {
