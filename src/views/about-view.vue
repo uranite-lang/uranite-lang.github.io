@@ -97,7 +97,7 @@
 <script setup>
 import { h } from 'vue'
 import { useHead } from '@vueuse/head'
-import hljs from 'highlight.js'
+import hljs from '../scripts/hljs.js'
 import { CONFIG } from '../uranite.js'
 
 useHead({
@@ -123,7 +123,7 @@ function escapeAttr(str) {
 }
 
 const codeExample = (() => {
-  const highlighted = hljs.highlight(codeSource, { language: 'python' }).value
+  const highlighted = hljs.highlight(codeSource, { language: 'uranite' }).value
   return `<div class="code-header"><span class="code-lang">uranite</span><button class="code-copy" data-code="${escapeAttr(codeSource)}">Copy</button></div><pre class="hljs"><code>${highlighted}</code></pre>`
 })()
 
@@ -138,34 +138,7 @@ function handleCopy(event) {
   })
 }
 
-const pipeline = `Source (.urn)
-    │
-    ▼
-  Lexer ──────── INDENT/DEDENT token emission
-    │
-    ▼
-  Parser ─────── Recursive descent, builds AST
-    │
-    ▼
-  Semantic ───── Two-pass: register declarations, then type-check
-    │
-    ▼
-  Borrow Check ─ Ownership validation, move tracking
-    │
-    ▼
-  HIR Lowering ─ AST → High-Level IR with resolved types
-    │
-    ▼
-  MIR Lowering ─ HIR → Control-Flow Graph of basic blocks
-    │
-    ▼
-  MIR Analysis ─ Liveness, borrow checking, optimization
-    │
-    ▼
-  MIR Codegen ── MIR → LLVM IR generation
-    │
-    ▼
-  Linker ─────── Links runtime libraries, produces native executable`
+const pipeline = `.\n└── Source (.urn|.uranite)\n    ├── Lexer\n    │   └── INDENT/DEDENT token emission\n    ├── Parser\n    │   └── Recursive descent, builds AST\n    ├── Semantic\n    │   └── Two-pass: register declarations, then type-check\n    ├── Borrow Check\n    │   └── Ownership validation, move tracking\n    ├── HIR Lowering\n    │   └── AST → High-Level IR with resolved types\n    ├── MIR Lowering\n    │   └── HIR → Control-Flow Graph of basic blocks\n    ├── MIR Analysis\n    │   └── Liveness, borrow checking, optimization\n    ├── MIR Codegen\n    │   └── MIR → LLVM IR generation\n    └── Linker\n        └── Links runtime libraries, produces native executable`
 
 const toolchain = [
   { name: 'uranite', description: 'Compiler: .urn source to native executable via LLVM 19' },
