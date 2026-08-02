@@ -64,7 +64,7 @@
 
 <script setup>
 import { useHead } from '@vueuse/head'
-import hljs from 'highlight.js'
+import hljs from '../scripts/hljs.js'
 
 useHead({
   title: 'Architecture — Uranite',
@@ -76,37 +76,7 @@ useHead({
   ]
 })
 
-const pipeline = `Source (.urn)
-    │
-    ▼
-  Lexer ──────── INDENT/DEDENT token emission (Python-style block structure)
-    │
-    ▼
-  Parser ─────── Recursive descent, builds AST
-    │
-    ▼
-  Semantic ───── Two-pass: register type declarations, then type-check bodies
-    │
-    ▼
-  Borrow Check ─ Ownership validation, move tracking, use-after-move detection
-    │
-    ▼
-  HIR Lowering ─ AST → High-Level IR with resolved types
-    │
-    ▼
-  HIR Validation  Structural correctness checks
-    │
-    ▼
-  MIR Lowering ─ HIR → Control-Flow Graph of basic blocks
-    │
-    ▼
-  MIR Analysis ─ Liveness analysis, borrow checking, optimization
-    │
-    ▼
-  MIR Codegen ── MIR → LLVM IR generation
-    │
-    ▼
-  Linker ─────── Links runtime libraries, produces native executable`
+const pipeline = `.\n└── Source (.urn|.uranite)\n    ├── Lexer\n    │   └── INDENT/DEDENT token emission\n    ├── Parser\n    │   └── Recursive descent, builds AST\n    ├── Semantic\n    │   └── Two-pass: register declarations, then type-check\n    ├── Borrow Check\n    │   └── Ownership validation, move tracking\n    ├── HIR Lowering\n    │   └── AST → High-Level IR with resolved types\n    ├── MIR Lowering\n    │   └── HIR → Control-Flow Graph of basic blocks\n    ├── MIR Analysis\n    │   └── Liveness, borrow checking, optimization\n    ├── MIR Codegen\n    │   └── MIR → LLVM IR generation\n    └── Linker\n        └── Links runtime libraries, produces native executable`
 
 const irStages = [
   {
